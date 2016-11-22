@@ -17,5 +17,6 @@ rc522(function(rfidSerialNumber){
 });
 
 app.use('/rfid.png', express.static(__dirname + '/rfid.png')); 
+app.use('/rfid2.png', express.static(__dirname + '/rfid2.png')); 
 
 app.listen(8000); // Setup your server port.

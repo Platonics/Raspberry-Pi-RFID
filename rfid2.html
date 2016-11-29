@@ -108,6 +108,7 @@
 		} else if (data.cNum !== data.lNum && !myMap.get(data.cNum)){
 			$(".icon").addClass('one');
 			$(".help").text("Unrecognized filament material detected");
+			$(".material").text("");
 			setTimeout(function() {
 				$(".icon").removeClass('one');
 				$(".help").text("Please change to valid filament or configure manually");

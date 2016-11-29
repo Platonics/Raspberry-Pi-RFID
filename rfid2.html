@@ -49,6 +49,21 @@
 			-o-transition: all 0.5s ease;
 			transition: all 0.5s ease;
 		}
+		.material {
+			width: 100%;
+			height: 50%;
+			color: #606060;
+			font-family: "Open Sans";
+			font-weight: 300;
+			font-size: 25px;
+			position: absolute;
+			bottom: -27%;
+			text-align: center;
+			-webkit-transitio: all 0.5s ease;
+			-moz-transition: all 0.5s ease;
+			-o-transition: all 0.5s ease;
+			transition: all 0.5s ease;
+		}
 		.icon {
 			width: 100%;
 			height: 76%;
@@ -75,6 +90,8 @@
 			<div class="help">
 				Scan your NFC Card.
 			</div>
+			<div class="material">
+			</div>
 		</div>
 	</body>
 
@@ -83,16 +100,18 @@
 
 	var socket = io(window.location.hostname + ":8500");
 	var myMap = new Map();
-	myMap.set('2123235', "PLA (Polylactic Acid)");
-	myMap.set('1235454', "ABS (Acrylonitrile Butadiene Styrene)");
+	myMap.set('53134322003680', "PLA (Polylactic Acid)");
+	myMap.set('5353222a005180', "ABS (Acrylonitrile Butadiene Styrene)");
 
 	socket.on('rfid', function(data){
 		if (data.cNum !== data.lNum && !!myMap.get(data.cNum)){
+			console.log("cNum:", data);
 			$(".icon").addClass('one');
-			$(".help").text("New filament material detected:", myMap.get(data.cNum));
+			$(".help").text("New filament material detected:");
+			$(".material").text(myMap.get(data.cNum));
 			setTimeout(function() {
 				$(".icon").removeClass('one');
-				$(".help").text("Configuration is updated according to filament material");
+				$(".help").text("Configuration is updated.");
 			}, 2500);
 		} else if (data.cNum !== data.lNum && !myMap.get(data.cNum)){
 			$(".icon").addClass('one');
@@ -105,7 +124,7 @@
 			$(".icon").addClass('one');
 			setTimeout(function() {
 				$(".icon").removeClass('one');
-			}, 2500);
+			}, 1000);
 		}
 	});
 

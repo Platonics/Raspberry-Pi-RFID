@@ -10,13 +10,20 @@ app.get('/', function(req, res){
 	res.sendfile(__dirname + '/rfid2.html');
 });
 
+
+var lastSerialNumber;
 // Everytime you tag in this will be triggered.
 rc522(function(rfidSerialNumber){
-	io.sockets.emit("rfid", rfidSerialNumber); // Sends the RFID Serial Number through Socket.IO
+
+	io.sockets.emit("rfid", {
+		cNum: rfidSerialNumber, 
+		lNum: lastSerialNumber
+	}); // Sends the RFID Serial Number through Socket.IO
+	lastSerialNumber = rfidSerialNumber;
   	console.log(rfidSerialNumber);
 });
 
 app.use('/rfid.png', express.static(__dirname + '/rfid.png')); 
-app.use('/rfid2.png', express.static(__dirname + '/rfid2.png')); 
+app.use('/rfid3.png', express.static(__dirname + '/rfid3.png')); 
 
 app.listen(8000); // Setup your server port.
